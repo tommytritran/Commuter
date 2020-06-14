@@ -5,8 +5,7 @@ const Container = styled.div`
   border: 1px solid black;
   border-radius: 8px;
   padding: 5px;
-  background-color: #e3f3ff;
-  margin-top: 10px;
+  margin-top: 3px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -51,15 +50,6 @@ const getExpectedArrivalTime = (aimed, expected) => {
     <DepartureTime>Avgang: {arrivalTime}</DepartureTime>
   ) : (
     <>
-      {console.log(
-        "aimed: " +
-          aimedTime +
-          " Expected: " +
-          expectedTime +
-          " difference: " +
-          difference +
-          " bool: "
-      )}
       <DepartureTime style={{ textDecoration: "line-through" }}>
         Forventet Avgang: {arrivalTime}
       </DepartureTime>
