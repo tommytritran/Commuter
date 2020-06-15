@@ -29,41 +29,45 @@ function App() {
   }, [currentFunction]);
 
   const FunctionHandler = async () => {
-    console.log("function handler");
-
     if (!isLoading && currentFunction) {
       setIsLoading(true);
       await new Promise((resolve) => {
         setTimeout(() => {
-          debugger;
+          console.log("API working..");
           currentFunction();
           resolve();
         }, 2000);
       }).then(() => {
+        console.log("API done..");
         setCurrentFunction(undefined);
         setIsLoading(false);
       });
     }
   };
 
+  //After API Call, checks if
   if (!isLoading && queue.length && !currentFunction) {
     try {
       const temporaryQueue = [...queue];
+      //If queue is empty, function will throw error and exit
+
       setCurrentFunction(temporaryQueue.pop());
+      console.log("pop function from queue");
       setQueue([]);
     } catch (e) {
+      console.log("Queue empty, function finished");
       setIsLoading(false);
     }
   }
 
-  const addToQueue = () => {
+  const addToQueue = (func) => {
+    //setCurrentFunction Triggers useEffect which will execute the passed function
     if (!isLoading) {
       setCurrentFunction(() => refetch);
       console.log("Set current function");
     } else {
       console.log("add to queue");
-
-      setQueue([...queue, () => refetch]);
+      setQueue([...queue, () => func]);
     }
   };
 
@@ -77,7 +81,7 @@ function App() {
       {data.stopPlace.estimatedCalls.map((calls, index) => (
         <Departure data={calls} key={index} />
       ))}
-      <Button onClick={() => addToQueue()}>Update</Button>
+      <Button onClick={() => addToQueue(refetch)}>Update</Button>
     </Container>
   );
 }

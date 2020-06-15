@@ -38,9 +38,12 @@ const getLineNumber = (value) => {
   return value.substring("RUT:Line:".length);
 };
 
+//Removes seconds, only shows hour and minutes
 const getAimedArrivalTime = (value) => {
   return new Date(value).toLocaleTimeString([], { timeStyle: "short" });
 };
+
+//Converts given timestamp to minutes to calculate the difference in minutes
 const getExpectedArrivalTime = (aimed, expected) => {
   const arrivalTime = getAimedArrivalTime(aimed);
   const aimedTime = new Date(aimed).getMinutes();
